@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose()
 
-const DBSOURCE = "./employees.db"
+const DBSOURCE = "./back-end/database/employees.db"
 
 /* Load database file (Creates file if not exists) */
 let db = new sqlite3.Database(DBSOURCE);

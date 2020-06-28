@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 //adding api employees routes
 const employeesRoutes = require('./routes/employees');
 //create database
-require('./database').init();
+require('./database/config').init();
 
 let app = express();
 
