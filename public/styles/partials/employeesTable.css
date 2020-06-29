@@ -1,11 +1,12 @@
 .employees-table {
+    display: none;
     border-collapse: collapse;
     width: 100%;
     font-family: 'Roboto', sans-serif;
 }
 
-.employees-table.hidden {
-    display: none;
+.employees-table.visible {
+    display: table;
 }
 
 .employees-table th, .employees-table td {

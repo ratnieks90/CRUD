@@ -1,0 +1,46 @@
+h1, h2, h3, h4, p {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 500;
+}
+
+.title {
+    text-align: center;
+}
+.no-data {
+    text-align: center;
+}
+
+button.confirm {
+    position: relative;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f54747;
+    color: white;
+    font-size: 12px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+button.confirm:hover {
+    background-color: #7d1f1f;
+}
+
+button.cancel {
+    position: relative;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    background-color: #139eba;
+    color: white;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+button.cancel:hover {
+    background-color: #0d7084;
+}

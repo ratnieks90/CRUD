@@ -1,7 +1,6 @@
 import axios from 'axios';
-
 //wrapper class for http client
-class Fetch {
+export default class Fetch {
     static get(url) {
         return new Promise((resolve, reject) => {
             axios.get(url).then(response => {
@@ -35,6 +34,16 @@ class Fetch {
                 });
         })
     }
-}
 
-export default Fetch;
+    static delete(url) {
+        return new Promise((resolve, reject) => {
+            axios.delete(url)
+                .then(function (response) {
+                    resolve(response.data);
+                })
+                .catch(function (error) {
+                    reject(error);
+                });
+        })
+    }
+}
