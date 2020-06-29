@@ -1,0 +1,49 @@
+.employees-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.employees-table.hidden {
+    display: none;
+}
+
+.employees-table th, .employees-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.employees-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    font-weight: 500;
+    background-color: #af5a4c;
+    color: white;
+}
+
+.employees-table td {
+    cursor: zoom-in;
+}
+
+.employees-table button {
+    cursor: pointer;
+    padding: 3px 10px;
+    font-size: 12px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
+
+.employees-table button.edit {
+    background-color: #f7bb44;
+}
+
+.employees-table button.delete {
+    background-color: #f54747;
+}
+
+.employees-table tr:nth-child(even){background-color: #f2f2f2;}
+
+.employees-table tr:hover {background-color: #ddd;}
+

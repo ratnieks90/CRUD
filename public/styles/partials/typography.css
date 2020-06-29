@@ -1,0 +1,14 @@
+h1, h2, h3, h4, p {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 500;
+}
+
+.title {
+    text-align: center;
+}
+.no-data {
+    text-align: center;
+}
