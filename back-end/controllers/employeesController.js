@@ -38,7 +38,7 @@ class EmployeesController {
             surname: req.body.surname,
             email: req.body.email,
             phone: req.body.phone,
-            password: req.body.password
+            description: req.body.description
         }
         db.run(
             `UPDATE employees set 
@@ -46,9 +46,9 @@ class EmployeesController {
            surname = COALESCE(?,surname), 
            email = COALESCE(?,email), 
            phone = COALESCE(?,phone), 
-           password = COALESCE(?,password) 
+           description = COALESCE(?,description) 
            WHERE id = ?`,
-            [data.name, data.surname, data.email, data.phone, data.password, req.params.id],
+            [data.name, data.surname, data.email, data.phone, data.description, req.params.id],
             function (err) {
                 if (err) {
                     res.status(400).json({"error": res.message})
@@ -65,9 +65,7 @@ class EmployeesController {
 
     static addEmployee(req, res) {
         let errors = []
-        if (!req.body.password) {
-            errors.push("No password specified");
-        }
+
         if (!req.body.email) {
             errors.push("No email specified");
         }
@@ -80,10 +78,10 @@ class EmployeesController {
             surname: req.body.surname,
             email: req.body.email,
             phone: req.body.phone,
-            password: req.body.password
+            description: req.body.description
         }
-        const sql = 'INSERT INTO employees (name, surname, email, phone, password) VALUES (?,?,?,?,?)'
-        const params = [data.name, data.surname, data.email, data.phone, data.password]
+        const sql = 'INSERT INTO employees (name, surname, email, phone, description) VALUES (?,?,?,?,?)'
+        const params = [data.name, data.surname, data.email, data.phone, data.description]
         db.run(sql, params, function (err) {
             if (err) {
                 res.status(400).json({"error": err.message})
@@ -106,7 +104,7 @@ class EmployeesController {
                     res.status(400).json({"error": res.message})
                     return;
                 }
-                res.json({"message": "deleted", changes: this.changes})
+                res.json({"message": "Employee successfully deleted", changes: this.changes})
             });
     }
 }

@@ -1,12 +1,8 @@
 .employees-table {
-    display: none;
+    display: table;
     border-collapse: collapse;
     width: 100%;
     font-family: 'Roboto', sans-serif;
-}
-
-.employees-table.visible {
-    display: table;
 }
 
 .employees-table th, .employees-table td {
@@ -38,6 +34,7 @@
 
 .employees-table button.edit {
     background-color: #f7bb44;
+    margin-right: 10px;
 }
 
 .employees-table button.delete {

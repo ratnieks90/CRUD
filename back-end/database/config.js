@@ -11,14 +11,14 @@ const init = () => {
         "id INTEGER PRIMARY KEY AUTOINCREMENT," +
         " name TEXT NOT NULL," +
         " surname TEXT NOT NULL," +
-        " email TEXT NOT NULL UNIQUE," +
+        " email TEXT NOT NULL," +
         " phone INTEGER," +
-        " password TEXT NOT NULL UNIQUE" +
+        " description TEXT NOT NULL" +
         ")", error => {
         if (error) {
             console.log("table already exist")
         } else {
-            const insert = 'INSERT INTO employees (name, surname, email, phone, password) VALUES (?,?,?,?,?)'
+            const insert = 'INSERT INTO employees (name, surname, email, phone, description) VALUES (?,?,?,?,?)'
             db.run(insert, ["mister", "test", "admin@example2.com", "3223433", "admin322"])
             db.run(insert, ["mister", "test2", "admin@example.com", "3223433433", "admin3222"])
         }

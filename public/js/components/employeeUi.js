@@ -1,15 +1,17 @@
 import _ from 'lodash';
 import popup from './popup';
-import {ACTIONS} from '../constants';
 import loader from './loader';
 import employeeService from '../employeeService';
 import UiElement from './UiElement';
+import notification from "./notification";
+import {NOTIFICATION_TYPE} from "../constants";
 
 class EmployeeUi {
     constructor() {
-        this.table = null;
         this.employees = [];
         this.container = document.querySelector('[data-employees]');
+        this.deleteEventHandler = this.deleteEventHandler.bind(this);
+        this.editEventHandler = this.editEventHandler.bind(this);
     }
 
     init() {
@@ -17,14 +19,11 @@ class EmployeeUi {
         employeeService.getEmployees().then(resp => {
             loader.hideLoader();
             this.employees = resp.data ? resp.data : [];
-            if (!this.employees || this.employees.length === 0) {
-                this.renderNoResults('Employees not found', this.container)
-            } else {
-                this.renderTable(this.employees);
-            }
+            this.renderTable(this.employees);
+            this.renderEditForm(15);
         }).catch(error => {
-            console.log(error)
             loader.hideLoader();
+            notification.pushNotification(error.toString(), NOTIFICATION_TYPE.warning);
         })
     }
 
@@ -36,79 +35,72 @@ class EmployeeUi {
     }
 
     renderTable(data) {
-        this.table = document.createElement('table');
-        this.table.classList.add('employees-table');
-        const tHead = document.createElement('thead');
-        tHead.innerHTML = `
-            <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        `;
+        this.container.innerHTML = '';
+        if (!data || data.length === 0) {
+            this.renderNoResults('Employees not found', this.container)
+        } else {
+            const table = UiElement.tableBase();
+            const tableBody = UiElement.tableBody(data, this.editEventHandler, this.deleteEventHandler)
+            table.appendChild(tableBody);
+            this.container.appendChild(table);
+        }
+    }
 
-        this.table.addEventListener('click', (e) => {
-            let currentElement = e.target;
-            switch (currentElement.dataset.action) {
-                case ACTIONS.delete:
-                    let id = currentElement.parentNode.parentNode.dataset.id
-                    this.renderDeleteDialog(id);
-                    break;
-                case ACTIONS.edit:
-                    console.log('edit')
-                    break;
-                default:
-                    console.log('show')
-            }
+    editEventHandler(e) {
+        let id = e.target.parentNode.parentNode.dataset.id;
+        this.renderEditForm(id);
+    }
+    deleteEventHandler(e) {
+        let id = e.target.parentNode.parentNode.dataset.id;
+        this.renderDeleteDialog(id);
+    }
+    cancelEventHandler() {
+        popup.hidePopup();
+    }
+    confirmDeleteHandler(id, index) {
+        loader.showLoader();
+        employeeService.deleteEmployee(id).then(resp => {
+            loader.hideLoader();
+            this.employees.splice(index, 1);
+            this.renderTable(this.employees);
+            popup.hidePopup();
+            notification.pushNotification(resp.message, NOTIFICATION_TYPE.success);
+        }).catch(error => {
+            loader.hideLoader();
+            notification.pushNotification(error.toString(), NOTIFICATION_TYPE.warning);
         })
-        this.table.classList.add('visible');
-        const tBody = document.createElement('tbody');
-
-        data.forEach((employee) => {
-            const row = document.createElement('tr');
-            row.setAttribute('data-id', employee.id);
-            row.innerHTML = `
-                <td>${employee.name}</td>
-                <td>${employee.surname}</td>
-                <td>${employee.email}</td>
-                <td>${employee.phone}</td>
-                <td>${employee.description}</td>
-                <td>
-                    <button data-action="edit" class="edit">Edit</button>
-                    <button data-action="delete" class="delete">Delete</button>
-                </td>
-            `;
-            tBody.appendChild(row);
-        });
-        this.table.appendChild(tBody);
-        this.table.appendChild(tHead);
-        this.container.appendChild(this.table);
     }
 
     renderDeleteDialog(id) {
         const index = _.findIndex(this.employees, {'id': Number(id)});
         if (index !== -1) {
             const employee = this.employees[index];
-            const dialog = document.createElement('div');
-            const title = document.createElement('h3');
-            title.textContent = `Delete employee ${employee.name} ${employee.surname}?`;
+            const title = `Delete employee ${employee.name} ${employee.surname}?`;
+            //render delete confirmation dialog
+            const deleteDialog = UiElement.deleteDialog(title, this.cancelEventHandler, () => {this.confirmDeleteHandler(id, index)})
 
-            const cancelButton = UiElement.button('Cancel', 'cancel', () => {
-                popup.hidePopup();
-            })
-            const submitButton = UiElement.button('Delete', 'confirm', () => {
-                employeeService.deleteEmployee(id).then(resp => {
-                    console.log(resp)
-                })
-            });
+            //insert content to popup
+            popup.showPopup(deleteDialog);
+        }else {
+            notification.pushNotification('Employee not found', NOTIFICATION_TYPE.warning);
+        }
+    }
 
-            dialog.appendChild(title);
-            dialog.appendChild(cancelButton);
-            dialog.appendChild(submitButton);
-            popup.showPopup(dialog);
+    renderEditForm(id) {
+        const index = _.findIndex(this.employees, {'id': Number(id)});
+        if (index !== -1) {
+            const employee = this.employees[index];
+            const title = `Edit employee ${employee.name} ${employee.surname}`;
+            //render delete confirmation dialog
+            const editForm = UiElement.form(title,  employee, (e) => {
+                e.preventDefault();
+                const fields = e.target.parentNode.elements;
+                console.log(e.target.parentNode.elements)})
+
+            //insert content to popup
+            popup.showPopup(editForm);
+        }else {
+            notification.pushNotification('Employee not found', NOTIFICATION_TYPE.warning);
         }
     }
 }

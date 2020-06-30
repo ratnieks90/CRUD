@@ -1,3 +1,6 @@
+body {
+ margin: 0;
+}
 h1, h2, h3, h4, p {
     font-family: 'Roboto', sans-serif;
 }
@@ -20,8 +23,7 @@ button.confirm {
     border-radius: 5px;
     background-color: #f54747;
     color: white;
-    font-size: 12px;
-    margin: 0 5px;
+    font-size: 14px;
     cursor: pointer;
 }
 
@@ -34,11 +36,11 @@ button.cancel {
     padding: 10px 30px;
     border: none;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 14px;
     background-color: #139eba;
     color: white;
     cursor: pointer;
-    margin: 0 5px;
+    margin-right: 10px;
 }
 
 button.cancel:hover {

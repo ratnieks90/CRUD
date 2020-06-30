@@ -16,6 +16,10 @@ class Popup {
             this.hidePopup();
         });
         this.popup = document.createElement('div');
+        //prevent click event bubbling
+        this.popup.addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
         const button = UiElement.button('', 'popup-close', () => {
             this.hidePopup();
         });
@@ -48,9 +52,11 @@ class Popup {
 
     hidePopup() {
         document.removeEventListener('keydown', this.registerEscButtonEvent);
-        this.popupContainer.classList.remove('active');
         this.popup.classList.remove('fade-in');
-        this.contentContainer.innerHTML = '';
+        setTimeout(() => {
+            this.contentContainer.innerHTML = '';
+            this.popupContainer.classList.remove('active');
+        }, 300)
     }
 }
 

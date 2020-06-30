@@ -1,4 +1,6 @@
 @import 'partials/common.css';
 @import 'partials/loader.css';
+@import 'partials/notification.css';
 @import 'partials/popup.css';
+@import 'partials/form.css';
 @import 'partials/employeesTable.css';

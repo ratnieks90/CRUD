@@ -1,0 +1,21 @@
+.form-field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+.form-field label {
+    flex: 0 0 100px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+.form-field input {
+    height: 26px;
+    margin: 0;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #dedede;
+    padding: 0 10px;
+    font-size: 14px;
+}

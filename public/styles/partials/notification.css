@@ -1,0 +1,41 @@
+.notification-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    z-index: 11;
+}
+
+.notification-container li {
+    color: white;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all .3s ease;
+}
+
+.notification-container li.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification-container li.success {
+    background-color: #1aa550;
+}
+
+.notification-container li.warning {
+    background-color: #d04708;
+}
