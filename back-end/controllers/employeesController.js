@@ -88,9 +88,8 @@ class EmployeesController {
                 return;
             }
             res.json({
-                "message": "success",
-                "data": data,
-                "id": this.lastID
+                "message": `Employee ${data.name} ${data.surname} added successfully`,
+                "data": {id: this.lastID, ...data},
             })
         });
     }

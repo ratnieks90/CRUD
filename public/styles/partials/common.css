@@ -1,5 +1,6 @@
 body {
- margin: 0;
+    margin: 0;
+    padding: 0 10px;
 }
 h1, h2, h3, h4, p {
     font-family: 'Roboto', sans-serif;
@@ -46,4 +47,23 @@ button.cancel {
 
 button.cancel:hover {
     background-color: #7d1f1f;
+}
+
+button.add-employee {
+    position: relative;
+    display: inline-block;
+    float: right;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    background-color: #139eba;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+button.add-employee:hover {
+    background-color: #0d7084;
 }

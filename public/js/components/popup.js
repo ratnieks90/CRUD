@@ -8,6 +8,7 @@ class Popup {
         this.contentContainer = null;
         this.registerEscButtonEvent = this.registerEscButtonEvent.bind(this);
         this.init();
+        console.log('init popup')
     }
     init() {
         this.popupContainer = document.createElement('div');
@@ -47,12 +48,13 @@ class Popup {
         this.contentContainer.appendChild(content);
         setTimeout(() => {
             this.popup.classList.add('fade-in');
-        }, 300)
+        }, 0)
     }
 
     hidePopup() {
         document.removeEventListener('keydown', this.registerEscButtonEvent);
         this.popup.classList.remove('fade-in');
+        //waiting till popup transition ends
         setTimeout(() => {
             this.contentContainer.innerHTML = '';
             this.popupContainer.classList.remove('active');

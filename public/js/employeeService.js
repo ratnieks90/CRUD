@@ -10,6 +10,10 @@ export default class EmployeeService {
         return fetch.delete(`/api/employees/${id}`);
     }
 
+    static addEmployee(data) {
+        return fetch.post(`/api/employees`, data);
+    }
+
     static editEmployee(id, data) {
         return fetch.put(`/api/employees/${id}`, data);
     }
