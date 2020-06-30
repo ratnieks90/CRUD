@@ -35,26 +35,7 @@ class EmployeeUi {
         })
     }
 
-    renderNoResults(title, parentNode) {
-        const noData = document.createElement('h2');
-        noData.textContent = title;
-        noData.classList.add('no-data');
-        parentNode.appendChild(noData);
-    }
-
-    renderTable(data) {
-        this.container.innerHTML = '';
-        if (!data || data.length === 0) {
-            this.renderNoResults('Employees not found', this.container)
-        } else {
-            const table = uiElement.tableBase();
-            const tableBody = uiElement.tableBody(data, this.editEventHandler, this.deleteEventHandler)
-            table.appendChild(tableBody);
-            this.container.appendChild(table);
-        }
-    }
-
-    addEventHandler(e) {
+    addEventHandler() {
         this.renderAddForm();
     }
 
@@ -89,12 +70,7 @@ class EmployeeUi {
     confirmEditHandler(event, id, index) {
         event.preventDefault();
         const fields = event.target.parentNode.elements;
-        //validate fields
-        const errors = validator.validate([
-            [fields[FIELDS.name], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
-            [fields[FIELDS.surname], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
-            [fields[FIELDS.email], [VALIDATOR_FLAG.required, VALIDATOR_FLAG.email]]
-        ])
+        const errors = this.validateFields(fields);
         if (errors.length > 0) {
             uiElement.errorsBlock(errors, event.target.parentNode);
         } else {
@@ -119,12 +95,7 @@ class EmployeeUi {
     confirmAddHandler(event) {
         event.preventDefault();
         const fields = event.target.parentNode.elements;
-        //validate fields
-        const errors = validator.validate([
-            [fields[FIELDS.name], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
-            [fields[FIELDS.surname], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
-            [fields[FIELDS.email], [VALIDATOR_FLAG.required, VALIDATOR_FLAG.email]]
-        ])
+        const errors = this.validateFields(fields);
         if (errors.length > 0) {
             uiElement.errorsBlock(errors, event.target.parentNode);
         } else {
@@ -146,6 +117,7 @@ class EmployeeUi {
         }
 
     }
+
     renderDeleteDialog(id) {
         const index = _.findIndex(this.employees, {'id': Number(id)});
         if (index !== -1) {
@@ -183,6 +155,34 @@ class EmployeeUi {
         const addForm = uiElement.form('Add new employee', null, this.confirmAddHandler);
         //insert content to popup
         popup.showPopup(addForm);
+    }
+
+    renderNoResults(title, parentNode) {
+        const noData = document.createElement('h2');
+        noData.textContent = title;
+        noData.classList.add('no-data');
+        parentNode.appendChild(noData);
+    }
+
+    renderTable(data) {
+        this.container.innerHTML = '';
+        if (!data || data.length === 0) {
+            this.renderNoResults('Employees not found', this.container)
+        } else {
+            const table = uiElement.tableBase();
+            const tableBody = uiElement.tableBody(data, this.editEventHandler, this.deleteEventHandler)
+            table.appendChild(tableBody);
+            this.container.appendChild(table);
+        }
+    }
+
+    validateFields(fields) {
+        //validate fields
+        return validator.validate([
+            [fields[FIELDS.name], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
+            [fields[FIELDS.surname], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
+            [fields[FIELDS.email], [VALIDATOR_FLAG.required, VALIDATOR_FLAG.email]]
+        ])
     }
 }
 
