@@ -47,6 +47,9 @@
         width: auto;
         margin: 0 5px;
     }
+    .employees-table td:last-child {
+        width: 120px;
+    }
 }
 
 .employees-table button.edit {
