@@ -6,19 +6,21 @@ import notification from './notification';
 import validator from './validator';
 import uiElement from "./uiElement";
 //constants
-import {FIELDS, NOTIFICATION_TYPE, VALIDATOR_FLAG} from "../constants";
+import {FIELDS, NOTIFICATION_TYPE, TABLE_ROW, VALIDATOR_FLAG} from "../constants";
 
 class EmployeeUi {
     constructor() {
         this.employees = [];
         this.container = document.querySelector('[data-employees]');
         this.counterContainer = document.querySelector('[data-total]');
+        const addNewEmployee = document.querySelector('[data-new-employee]');
+
         this.deleteEventHandler = this.deleteEventHandler.bind(this);
         this.editEventHandler = this.editEventHandler.bind(this);
         this.addEventHandler = this.addEventHandler.bind(this);
+        this.viewEventHandler = this.viewEventHandler.bind(this);
         this.confirmAddHandler = this.confirmAddHandler.bind(this);
 
-        const addNewEmployee = document.querySelector('[data-new-employee]');
         addNewEmployee.addEventListener('click', this.addEventHandler);
     }
 
@@ -47,6 +49,13 @@ class EmployeeUi {
     deleteEventHandler(e) {
         let id = e.target.parentNode.parentNode.dataset.id;
         this.renderDeleteDialog(id);
+    }
+
+    viewEventHandler(e) {
+        if (e.target.tagName === TABLE_ROW){
+            let id = e.target.parentNode.dataset.id;
+            this.renderViewPopup(id);
+        }
     }
 
     cancelEventHandler() {
@@ -140,7 +149,7 @@ class EmployeeUi {
         if (index !== -1) {
             const employee = this.employees[index];
             const title = `Edit employee ${employee.name} ${employee.surname}`;
-            //render delete confirmation dialog
+            //render edit form
             const editForm = uiElement.form(title, employee, (e) => {
                 this.confirmEditHandler(e, id, index)
             });
@@ -152,9 +161,23 @@ class EmployeeUi {
     }
 
     renderAddForm() {
+        //render add form
         const addForm = uiElement.form('Add new employee', null, this.confirmAddHandler);
         //insert content to popup
         popup.showPopup(addForm);
+    }
+
+    renderViewPopup(id) {
+        const index = _.findIndex(this.employees, {'id': Number(id)});
+        if (index !== -1) {
+            const employee = this.employees[index];
+            //render view block
+            const block = uiElement.viewBlock(employee);
+            //insert content to popup
+            popup.showPopup(block);
+        } else {
+            notification.pushNotification('Employee not found', NOTIFICATION_TYPE.warning);
+        }
     }
 
     renderNoResults(title, parentNode) {
@@ -171,7 +194,12 @@ class EmployeeUi {
             this.renderNoResults('Employees not found', this.container)
         } else {
             const table = uiElement.tableBase();
-            const tableBody = uiElement.tableBody(data, this.editEventHandler, this.deleteEventHandler)
+            const tableBody = uiElement.tableBody(
+                data,
+                this.editEventHandler,
+                this.deleteEventHandler,
+                this.viewEventHandler
+            );
             table.appendChild(tableBody);
             this.container.appendChild(table);
         }

@@ -1,3 +1,5 @@
+import {FIELDS} from "../constants";
+
 export default class UiElement {
 
     static button(text, className, clickEvent) {
@@ -27,7 +29,7 @@ export default class UiElement {
         return table;
     }
 
-    static tableBody(employees, editEvent, deleteEvent) {
+    static tableBody(employees, editEvent, deleteEvent, viewEvent) {
         const tBody = document.createElement('tbody');
 
         employees.forEach((employee) => {
@@ -37,6 +39,7 @@ export default class UiElement {
             actionsColumn.appendChild(UiElement.button('Delete', 'delete', deleteEvent));
 
             const row = document.createElement('tr');
+            row.addEventListener('click', viewEvent);
             row.setAttribute('data-id', employee.id);
             row.innerHTML = `
                 <td>${employee.name}</td>
@@ -66,6 +69,24 @@ export default class UiElement {
         dialog.appendChild(confirmButton);
 
         return dialog;
+    }
+
+    static viewBlock(employee) {
+
+        const block = document.createElement('div');
+        const descriptionBlock = document.createElement('dl');
+        descriptionBlock.classList.add('employee-details');
+        Object.entries(employee).forEach(([key, value]) => {
+            let dt = document.createElement('dt');
+            dt.textContent = key.toUpperCase();
+            let dd = document.createElement('dd');
+            dd.textContent = value.toString();
+            descriptionBlock.appendChild(dt);
+            descriptionBlock.appendChild(dd);
+        })
+        block.appendChild(descriptionBlock);
+
+        return block;
     }
 
     static form(text, employee, formSubmitHandler) {

@@ -8,6 +8,7 @@ h1, h2, h3, h4, p {
 
 h1, h2, h3, h4 {
     font-weight: 500;
+    word-break: break-word;
 }
 
 .title {
@@ -77,4 +78,25 @@ button.add-employee:hover {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     font-weight: 500;
+}
+.employee-details {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    font-family: 'Roboto', sans-serif;
+}
+
+.employee-details dt {
+    flex: 0 0 150px;
+    float: left;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.employee-details dd {
+    flex: 0 0 calc(100% - 150px);
+    float: left;
+    margin: 0 0 10px 0;
 }

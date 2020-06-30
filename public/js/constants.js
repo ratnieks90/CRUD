@@ -18,3 +18,5 @@ export const VALIDATOR_FLAG = {
     min_length: 'min_length',
     email: 'email'
 };
+
+export const TABLE_ROW = 'TD';
