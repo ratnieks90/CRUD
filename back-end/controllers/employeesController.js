@@ -56,7 +56,7 @@ class EmployeesController {
                 }
                 res.status(201)
                     .json({
-                        message: "success",
+                        message: `Employee ${data.name} ${data.surname} successfully updated`,
                         data: data,
                         changes: this.changes
                     })

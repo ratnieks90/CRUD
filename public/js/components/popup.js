@@ -1,5 +1,5 @@
 import {ESCAPE_BUTTON} from "../constants";
-import UiElement from "./UiElement";
+import UiElement from "./uiElement";
 
 class Popup {
     constructor() {

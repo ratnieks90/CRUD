@@ -3,4 +3,18 @@ export const NOTIFICATION_TYPE = {
     success: 'success'
 }
 
+export const FIELDS = {
+    name: 'name',
+    surname: 'surname',
+    email: 'email',
+    phone: 'phone',
+    description: 'description',
+}
+
 export const ESCAPE_BUTTON = 'Escape';
+
+export const VALIDATOR_FLAG = {
+    required: 'required',
+    min_length: 'min_length',
+    email: 'email'
+};

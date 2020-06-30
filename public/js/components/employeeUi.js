@@ -2,9 +2,11 @@ import _ from 'lodash';
 import popup from './popup';
 import loader from './loader';
 import employeeService from '../employeeService';
-import UiElement from './UiElement';
-import notification from "./notification";
-import {NOTIFICATION_TYPE} from "../constants";
+import UiElement from './uiElement';
+import notification from './notification';
+import validator from './validator';
+import {FIELDS, NOTIFICATION_TYPE, VALIDATOR_FLAG} from "../constants";
+import uiElement from "./uiElement";
 
 class EmployeeUi {
     constructor() {
@@ -57,6 +59,7 @@ class EmployeeUi {
     cancelEventHandler() {
         popup.hidePopup();
     }
+
     confirmDeleteHandler(id, index) {
         loader.showLoader();
         employeeService.deleteEmployee(id).then(resp => {
@@ -71,7 +74,40 @@ class EmployeeUi {
         })
     }
 
+    confirmEditHandler(event, id, index) {
+        event.preventDefault();
+        let data = {};
+        const fields = event.target.parentNode.elements;
+        //validate fields
+        const errors = validator.validate([
+            [fields[FIELDS.name], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
+            [fields[FIELDS.surname], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
+            [fields[FIELDS.email], [VALIDATOR_FLAG.required, VALIDATOR_FLAG.email]]
+        ])
+
+        if(errors.length > 0) {
+            uiElement.errorsBlock(errors, event.target.parentNode);
+        }else {
+            loader.showLoader();
+            Object.entries(FIELDS).forEach(([key, fieldName]) => {
+                data[fieldName] = fields[fieldName].value
+            })
+            employeeService.editEmployee(id, data).then( resp => {
+                loader.hideLoader();
+                this.employees[index] = {id: Number(id), ...data};
+                console.log(this.employees)
+                this.renderTable(this.employees);
+                popup.hidePopup();
+                notification.pushNotification(resp.message, NOTIFICATION_TYPE.success);
+            }).catch( error => {
+                loader.hideLoader();
+                notification.pushNotification(error.toString(), NOTIFICATION_TYPE.warning);
+            })
+        }
+    }
+
     renderDeleteDialog(id) {
+        console.log(id, this.employees)
         const index = _.findIndex(this.employees, {'id': Number(id)});
         if (index !== -1) {
             const employee = this.employees[index];
@@ -92,11 +128,7 @@ class EmployeeUi {
             const employee = this.employees[index];
             const title = `Edit employee ${employee.name} ${employee.surname}`;
             //render delete confirmation dialog
-            const editForm = UiElement.form(title,  employee, (e) => {
-                e.preventDefault();
-                const fields = e.target.parentNode.elements;
-                console.log(e.target.parentNode.elements)})
-
+            const editForm = UiElement.form(title,  employee, (e) => {this.confirmEditHandler(e, id, index)});
             //insert content to popup
             popup.showPopup(editForm);
         }else {

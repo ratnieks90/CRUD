@@ -21,14 +21,15 @@ button.confirm {
     padding: 10px 30px;
     border: none;
     border-radius: 5px;
-    background-color: #f54747;
+    background-color: #139eba;
+
     color: white;
     font-size: 14px;
     cursor: pointer;
 }
 
 button.confirm:hover {
-    background-color: #7d1f1f;
+    background-color: #0d7084;
 }
 
 button.cancel {
@@ -37,12 +38,12 @@ button.cancel {
     border: none;
     border-radius: 5px;
     font-size: 14px;
-    background-color: #139eba;
+    background-color: #f54747;
     color: white;
     cursor: pointer;
     margin-right: 10px;
 }
 
 button.cancel:hover {
-    background-color: #0d7084;
+    background-color: #7d1f1f;
 }

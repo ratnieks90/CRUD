@@ -74,12 +74,38 @@ export default class UiElement {
 
         title.textContent = text;
 
-        const nameField = UiElement.field('Name', 'name', 'name', employee ? employee.name : '');
-        const surnameField = UiElement.field('Surname', 'surname', 'surname', employee ? employee.surname : '');
-        const emailField = UiElement.field('Email', 'email', 'email', employee ? employee.email : '');
-        const phoneField = UiElement.field('Phone', 'phone', 'phone', employee ? employee.phone : '');
-        const descriptionField = UiElement.field('Description', 'description', 'description', employee ? employee.description : '');
-        const submitButton = UiElement.button('Submit form', 'confirm', formSubmitHandler);
+        const nameField = UiElement.field(
+            'Name',
+            'name',
+            'name',
+            employee ? employee.name : '',
+            true);
+        const surnameField = UiElement.field(
+            'Surname',
+            'surname',
+            'surname',
+            employee ? employee.surname : '',
+            true);
+        const emailField = UiElement.field(
+            'Email',
+            'email',
+            'email',
+            employee ? employee.email : '',
+            true);
+        const phoneField = UiElement.field(
+            'Phone',
+            'phone',
+            'phone',
+            employee ? employee.phone : '');
+        const descriptionField = UiElement.field(
+            'Description',
+            'description',
+            'description',
+            employee ? employee.description : '');
+        const submitButton = UiElement.button(
+            'Submit form',
+            'confirm',
+            formSubmitHandler);
 
         form.appendChild(title);
         form.appendChild(nameField);
@@ -92,7 +118,25 @@ export default class UiElement {
         return form;
     }
 
-    static field(labelText, inputName, id, value){
+    static errorsBlock(errors, container) {
+        let errorsList;
+        errorsList = document.querySelector('[data-errors]');
+        if (!errorsList) {
+            errorsList = document.createElement('ul');
+            console.log(errorsList)
+            errorsList.classList.add('errors-list');
+            errorsList.setAttribute('data-errors', '');
+        }
+        errorsList.innerHTML = '';
+        errors.forEach(error => {
+            let errorNode = document.createElement('li');
+            errorNode.textContent = error;
+            errorsList.appendChild(errorNode);
+        })
+        container.prepend(errorsList);
+    }
+
+    static field(labelText, inputName, id, value, required = false) {
         //creating field wrapper
         const field = document.createElement('div');
         field.classList.add('form-field');
@@ -100,6 +144,9 @@ export default class UiElement {
         const label = document.createElement('label');
         label.setAttribute('for', id);
         label.textContent = labelText;
+        if(required) {
+            label.classList.add('required')
+        }
         //creating input
         const input = document.createElement('input');
 
