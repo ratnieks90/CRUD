@@ -123,7 +123,6 @@ export default class UiElement {
         errorsList = document.querySelector('[data-errors]');
         if (!errorsList) {
             errorsList = document.createElement('ul');
-            console.log(errorsList)
             errorsList.classList.add('errors-list');
             errorsList.setAttribute('data-errors', '');
         }

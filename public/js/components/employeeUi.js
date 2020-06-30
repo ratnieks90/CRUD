@@ -12,7 +12,7 @@ class EmployeeUi {
     constructor() {
         this.employees = [];
         this.container = document.querySelector('[data-employees]');
-
+        this.counterContainer = document.querySelector('[data-total]');
         this.deleteEventHandler = this.deleteEventHandler.bind(this);
         this.editEventHandler = this.editEventHandler.bind(this);
         this.addEventHandler = this.addEventHandler.bind(this);
@@ -165,6 +165,7 @@ class EmployeeUi {
     }
 
     renderTable(data) {
+        this.counterContainer.textContent = `Employees - ${data.length}`;
         this.container.innerHTML = '';
         if (!data || data.length === 0) {
             this.renderNoResults('Employees not found', this.container)

@@ -1,3 +1,8 @@
+.table-block {
+    width: 100%;
+    position: relative;
+    overflow-x: auto;
+}
 .employees-table {
     display: table;
     border-collapse: collapse;
@@ -15,12 +20,15 @@
     padding-bottom: 12px;
     text-align: left;
     font-weight: 500;
-    background-color: #af5a4c;
+    background-color: #4caf6f;
     color: white;
 }
 
 .employees-table td {
     cursor: zoom-in;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .employees-table button {
@@ -30,11 +38,19 @@
     border-radius: 5px;
     color: white;
     border: none;
+    width: 100%;
+    margin: 0 0 5px 0;
+}
+
+@media screen and (min-width: 768px) {
+    .employees-table button {
+        width: auto;
+        margin: 0 5px;
+    }
 }
 
 .employees-table button.edit {
     background-color: #f7bb44;
-    margin-right: 10px;
 }
 
 .employees-table button.delete {

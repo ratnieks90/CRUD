@@ -52,7 +52,6 @@ button.cancel:hover {
 button.add-employee {
     position: relative;
     display: inline-block;
-    float: right;
     border: none;
     font-size: 16px;
     font-weight: 500;
@@ -61,9 +60,21 @@ button.add-employee {
     cursor: pointer;
     padding: 10px 20px;
     border-radius: 5px;
-    margin-bottom: 20px;
 }
 
 button.add-employee:hover {
     background-color: #0d7084;
+}
+
+.info-block {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.info-block span {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
 }
