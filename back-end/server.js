@@ -12,13 +12,15 @@ let app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-// static pages from public folder
-app.use(express.static(path.join(__dirname, '../public')));
-// Other API endpoints
+//API endpoints
 app.use('/api', employeesRoutes)
-
+//make js, img and css files available vie root route
+app.use('/dist', express.static(path.join(__dirname, '../public/dist')));
+app.use('/styles', express.static(path.join(__dirname, '../public/styles')));
+app.use('/img', express.static(path.join(__dirname, '../public/img')));
+//move all requests to index.html
 app.get('*', function(req, res){
-    res.status(404).send('endpoint not found');
+    res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 // Server port

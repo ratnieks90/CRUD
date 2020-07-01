@@ -6,7 +6,7 @@ import notification from './notification';
 import validator from './validator';
 import uiElement from "./uiElement";
 //constants
-import {FIELDS, NOTIFICATION_TYPE, TABLE_ROW, VALIDATOR_FLAG} from "../constants";
+import {FIELDS, NOTIFICATION_TYPE, STATE_TYPES, TABLE_ROW, VALIDATOR_FLAG} from "../constants";
 
 class EmployeeUi {
     constructor() {
@@ -30,6 +30,7 @@ class EmployeeUi {
             loader.hideLoader();
             this.employees = resp.data ? resp.data : [];
             this.renderTable(this.employees);
+            this.updateState(window.location.pathname);
             //this.renderEditForm(15);
         }).catch(error => {
             loader.hideLoader();
@@ -38,28 +39,32 @@ class EmployeeUi {
     }
 
     addEventHandler() {
+        window.history.pushState('add', 'Add employee', '/add');
         this.renderAddForm();
     }
 
     editEventHandler(e) {
         let id = e.target.parentNode.parentNode.dataset.id;
+        window.history.pushState('edit', 'Edit employee', `/edit/${id}`);
         this.renderEditForm(id);
     }
 
     deleteEventHandler(e) {
         let id = e.target.parentNode.parentNode.dataset.id;
+        window.history.pushState('delete', 'Delete employee', `/delete/${id}`);
         this.renderDeleteDialog(id);
     }
 
     viewEventHandler(e) {
         if (e.target.tagName === TABLE_ROW){
             let id = e.target.parentNode.dataset.id;
+            window.history.pushState('view', 'View single employee', `/view/${id}`);
             this.renderViewPopup(id);
         }
     }
 
     cancelEventHandler() {
-        popup.hidePopup();
+        popup.closePopup();
     }
 
     confirmDeleteHandler(id, index) {
@@ -68,7 +73,7 @@ class EmployeeUi {
             loader.hideLoader();
             this.employees.splice(index, 1);
             this.renderTable(this.employees);
-            popup.hidePopup();
+            popup.closePopup();
             notification.pushNotification(resp.message, NOTIFICATION_TYPE.success);
         }).catch(error => {
             loader.hideLoader();
@@ -92,7 +97,7 @@ class EmployeeUi {
                 loader.hideLoader();
                 this.employees[index] = {id: Number(id), ...data};
                 this.renderTable(this.employees);
-                popup.hidePopup();
+                popup.closePopup();
                 notification.pushNotification(resp.message, NOTIFICATION_TYPE.success);
             }).catch(error => {
                 loader.hideLoader();
@@ -117,7 +122,7 @@ class EmployeeUi {
                 loader.hideLoader();
                 this.employees.push(resp.data)
                 this.renderTable(this.employees);
-                popup.hidePopup();
+                popup.closePopup();
                 notification.pushNotification(resp.message, NOTIFICATION_TYPE.success);
             }).catch(error => {
                 loader.hideLoader();
@@ -212,6 +217,27 @@ class EmployeeUi {
             [fields[FIELDS.surname], [VALIDATOR_FLAG.required, `${VALIDATOR_FLAG.min_length}|5`]],
             [fields[FIELDS.email], [VALIDATOR_FLAG.required, VALIDATOR_FLAG.email]]
         ])
+    }
+
+    updateState(path) {
+        let [type, value] = path.substring(1).split('/');
+        let id = value ? value : null;
+        switch (type) {
+            case STATE_TYPES.add:
+                this.renderAddForm();
+                break;
+            case STATE_TYPES.edit:
+                this.renderEditForm(id);
+                break;
+            case STATE_TYPES.delete:
+                this.renderDeleteDialog(id);
+                break;
+            case STATE_TYPES.view:
+                this.renderViewPopup(id);
+                break;
+            default:
+                popup.hidePopup();
+        }
     }
 }
 

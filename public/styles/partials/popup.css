@@ -46,7 +46,7 @@
     cursor: pointer;
     height: 20px;
     width: 20px;
-    background-image: url(../../img/close.png);
+    background-image: url(/img/close.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

@@ -8,13 +8,12 @@ class Popup {
         this.contentContainer = null;
         this.registerEscButtonEvent = this.registerEscButtonEvent.bind(this);
         this.init();
-        console.log('init popup')
     }
     init() {
         this.popupContainer = document.createElement('div');
         this.popupContainer.classList.add('popup-container');
         this.popupContainer.addEventListener('click', () => {
-            this.hidePopup();
+            this.closePopup();
         });
         this.popup = document.createElement('div');
         //prevent click event bubbling
@@ -22,7 +21,7 @@ class Popup {
             e.stopPropagation();
         })
         const button = UiElement.button('', 'popup-close', () => {
-            this.hidePopup();
+            this.closePopup();
         });
         this.popup.classList.add('popup');
         this.contentContainer = document.createElement('div');
@@ -38,7 +37,7 @@ class Popup {
     registerEscButtonEvent(e) {
         const key = e.key;
         if (key === ESCAPE_BUTTON) {
-            this.hidePopup();
+            this.closePopup();
         }
     }
 
@@ -50,15 +49,22 @@ class Popup {
             this.popup.classList.add('fade-in');
         }, 0)
     }
-
+    //hide popup without store state in window history
     hidePopup() {
+        this.removePopup();
+    }
+    closePopup() {
+        window.history.pushState('table', 'Employees table', '/');
+        this.removePopup();
+    }
+    removePopup() {
         document.removeEventListener('keydown', this.registerEscButtonEvent);
         this.popup.classList.remove('fade-in');
         //waiting till popup transition ends
         setTimeout(() => {
             this.contentContainer.innerHTML = '';
             this.popupContainer.classList.remove('active');
-        }, 300)
+        }, 300);
     }
 }
 

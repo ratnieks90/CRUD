@@ -15,7 +15,7 @@
 .spinner {
     flex: 0 0 100px;
     height: 100px;
-    background-image: url(../../img/loader.gif);
+    background-image: url(/img/loader.gif);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose()
 
-const DBSOURCE = "./back-end/database/employees.db"
+const DBSOURCE = "./back-end/database/employees.db";
 
 /* Load database file (Creates file if not exists) */
 let db = new sqlite3.Database(DBSOURCE);
@@ -13,13 +13,13 @@ const init = () => {
         " surname TEXT NOT NULL," +
         " email TEXT NOT NULL," +
         " phone INTEGER," +
-        " description TEXT NOT NULL" +
+        " description TEXT" +
         ")", error => {
         if (error) {
             console.log("table already exist")
         } else {
             const insert = 'INSERT INTO employees (name, surname, email, phone, description) VALUES (?,?,?,?,?)'
-            db.run(insert, ["mister", "test", "admin@example2.com", "3223433", "admin322"])
+            db.run(insert, ["mister", "", "admin@example2.com", "3223433", "admin322"])
             db.run(insert, ["mister", "test2", "admin@example.com", "3223433433", "admin3222"])
         }
     });

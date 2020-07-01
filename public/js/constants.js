@@ -19,4 +19,11 @@ export const VALIDATOR_FLAG = {
     email: 'email'
 };
 
+export const STATE_TYPES = {
+    view: 'view',
+    delete: 'delete',
+    edit: 'edit',
+    add: 'add'
+};
+
 export const TABLE_ROW = 'TD';
