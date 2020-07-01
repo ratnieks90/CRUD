@@ -5,9 +5,13 @@ export default class Fetch {
         return new Promise((resolve, reject) => {
             axios.get(url).then(response => {
                 resolve(response.data)
-            }).catch(error => {
-                reject(error)
-            })
+            }).catch(function (error) {
+                if (error.response) {
+                    reject(error.response.data.error);
+                } else {
+                    reject(error);
+                }
+            });
         })
     }
 
@@ -18,7 +22,11 @@ export default class Fetch {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    reject(error);
+                    if (error.response) {
+                        reject(error.response.data.error);
+                    } else {
+                        reject(error);
+                    }
                 });
         })
     }
@@ -30,7 +38,11 @@ export default class Fetch {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    reject(error);
+                    if (error.response) {
+                        reject(error.response.data.error);
+                    } else {
+                        reject(error);
+                    }
                 });
         })
     }
@@ -42,8 +54,13 @@ export default class Fetch {
                     resolve(response.data);
                 })
                 .catch(function (error) {
-                    reject(error);
+                    if (error.response) {
+                        reject(error.response.data.error);
+                    } else {
+                        reject(error);
+                    }
                 });
         })
     }
+
 }

@@ -42,16 +42,16 @@ class EmployeesController {
         }
         db.run(
             `UPDATE employees set 
-           name = COALESCE(?,name), 
-           surname = COALESCE(?,surname), 
-           email = COALESCE(?,email), 
+           name = ?, 
+           surname = ?, 
+           email = ?, 
            phone = COALESCE(?,phone), 
            description = COALESCE(?,description) 
            WHERE id = ?`,
             [data.name, data.surname, data.email, data.phone, data.description, req.params.id],
             function (err) {
                 if (err) {
-                    res.status(400).json({"error": res.message})
+                    res.status(400).json({"error": err.message})
                     return;
                 }
                 res.status(201)
