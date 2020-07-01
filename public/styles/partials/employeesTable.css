@@ -1,7 +1,9 @@
 .table-block {
     width: 100%;
     position: relative;
-    overflow-x: auto;
+    overflow: auto;
+    display: block;
+    height: 500px;
 }
 .employees-table {
     display: table;
@@ -11,16 +13,19 @@
 }
 
 .employees-table th, .employees-table td {
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     padding: 8px;
 }
 
 .employees-table th {
+    border: none;
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     font-weight: 500;
     background-color: #4caf6f;
+    position: sticky;
+    top: 0;
     color: white;
 }
 

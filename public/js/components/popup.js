@@ -44,6 +44,7 @@ class Popup {
     showPopup(content) {
         document.addEventListener('keydown', this.registerEscButtonEvent);
         this.popupContainer.classList.add('active');
+        this.contentContainer.innerHTML = '';
         this.contentContainer.appendChild(content);
         setTimeout(() => {
             this.popup.classList.add('fade-in');
@@ -62,7 +63,6 @@ class Popup {
         this.popup.classList.remove('fade-in');
         //waiting till popup transition ends
         setTimeout(() => {
-            this.contentContainer.innerHTML = '';
             this.popupContainer.classList.remove('active');
         }, 300);
     }
