@@ -37,6 +37,10 @@
     white-space: nowrap;
 }
 
+.employees-table td:last-child {
+    white-space: normal;
+}
+
 .employees-table button {
     cursor: pointer;
     padding: 3px 10px;

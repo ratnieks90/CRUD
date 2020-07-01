@@ -99,4 +99,6 @@ button.add-employee:hover {
     flex: 0 0 calc(100% - 150px);
     float: left;
     margin: 0 0 10px 0;
+    max-height: 100px;
+    overflow-y: auto;
 }
