@@ -1,5 +1,3 @@
-import {FIELDS} from "../constants";
-
 export default class UiElement {
 
     static button(text, className, clickEvent) {

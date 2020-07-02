@@ -1,4 +1,4 @@
-import {NOTIFICATION_TYPE} from "../constants";
+import {NOTIFICATION_TYPE} from '../constants';
 
 class Notification {
     constructor() {

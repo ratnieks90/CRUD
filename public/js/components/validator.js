@@ -1,4 +1,4 @@
-import {VALIDATOR_FLAG} from "../constants";
+import {VALIDATOR_FLAG} from '../constants';
 
 export default class Validator {
 

@@ -4,9 +4,9 @@ import loader from './loader';
 import employeeService from '../employeeService';
 import notification from './notification';
 import validator from './validator';
-import uiElement from "./uiElement";
+import uiElement from './uiElement';
 //constants
-import {FIELDS, NOTIFICATION_TYPE, STATE_TYPES, TABLE_ROW, VALIDATOR_FLAG} from "../constants";
+import {FIELDS, NOTIFICATION_TYPE, STATE_TYPES, TABLE_ROW, VALIDATOR_FLAG} from '../constants';
 
 class EmployeeUi {
     constructor() {
