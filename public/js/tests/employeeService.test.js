@@ -1,5 +1,5 @@
 import axios from 'axios';
-import employeeService from './employeeService';
+import employeeService from '../employeeService';
 
 jest.mock('axios');
 
