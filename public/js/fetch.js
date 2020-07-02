@@ -1,6 +1,7 @@
 import axios from 'axios';
 //wrapper class for http client
 export default class Fetch {
+
     static get(url) {
         return new Promise((resolve, reject) => {
             axios.get(url).then(response => {

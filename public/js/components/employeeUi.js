@@ -31,7 +31,6 @@ class EmployeeUi {
             this.employees = resp.data ? resp.data : [];
             this.renderTable(this.employees);
             this.updateState(window.location.pathname);
-            //this.renderEditForm(15);
         }).catch(error => {
             loader.hideLoader();
             notification.pushNotification(error.toString(), NOTIFICATION_TYPE.warning);
