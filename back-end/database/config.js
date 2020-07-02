@@ -1,4 +1,4 @@
-const sqlite3 = require('sqlite3').verbose()
+const sqlite3 = require('sqlite3').verbose();
 
 const DBSOURCE = "./back-end/database/employees.db";
 
@@ -16,10 +16,10 @@ const init = () => {
         " description TEXT" +
         ")", error => {
         if (error) {
-            console.log("table already exist")
+            console.log("table already exist");
         }
     });
-}
+};
 
 module.exports = {
     db: db,

@@ -1,7 +1,7 @@
 // Create express app
-const express = require("express");
+const express = require('express');
 const path = require('path');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 //adding api employees routes
 const employeesRoutes = require('./routes/employees');
 //create database
@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 //API endpoints
-app.use('/api', employeesRoutes)
+app.use('/api', employeesRoutes);
 //make js, img and css files available vie root route
 app.use('/dist', express.static(path.join(__dirname, '../public/dist')));
 app.use('/styles', express.static(path.join(__dirname, '../public/styles')));
@@ -27,5 +27,5 @@ app.get('*', function(req, res){
 const HTTP_PORT = 8000;
 // Start server
 app.listen(HTTP_PORT, () => {
-    console.log("Server running on http://localhost:%PORT%/".replace("%PORT%", HTTP_PORT))
+    console.log('Server running on http://localhost:%PORT%/'.replace("%PORT%", HTTP_PORT))
 });
